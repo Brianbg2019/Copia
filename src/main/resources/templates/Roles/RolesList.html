@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Listar roles</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body class="container">
+	
+		<div class="col-10 offset-1 mt-3">
+		<button type="button" class="btn btn-outline-primary"
+			data-toggle="modal" data-target="#ModalAddRol">NUEVO
+			ROL</button>
+	</div>
+	
+	<div class="row justify-content-center align-items-center col-10 offset-1"><h1>LISTA DE ROLES</h1></div>
+		<table class="table">
+			<thead>
+			 	<tr>
+				 	<th>ID</th>
+				 	<th>Rol</th>
+				 	<th>Editar</th>
+				 	<th>Eliminar</th>
+			 	</tr>
+			</thead>
+			<tbody>
+				<tr th:each="i : ${items}">
+					<td th:text="${i.idRol}"></td>
+					<td th:text="${i.rol}"></td>
+					<td><a name="modificar" id="modificar" class="btn btn-outline-warning" th:href="@{'/roles/modificar/' + ${i.idRol}}">Editar</a></td>
+					<td><a name="eliminar" id="eliminar" class="btn btn-outline-danger" th:href="@{'/roles/eliminar/' + ${i.idRol}}">Eliminar</a></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		
+		<!-- Modal para guardar -->
+			<div class="modal" id="ModalAddRol">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header bg-info">
+					<h4 class="modal-title">AGREGAR ROL</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form th:action="@{/roles/verificar}" method="post">
+						<div class="form-group row">
+							<label for="name" class="col-sm-2 control-label">Rol</label>
+							
+								<input type="text" class="form-control col-6" name="rol" placeholder="Nuevo rol" required="required">
+							    <input type="submit" class="btn btn-outline-success col-2 offset-1" value="Guardar">
+						</div>
+						
+					</form>
+
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+	
+		<script type="text/javascript">
+	$('table').find('tr').click( function(){
+		  console.log('You clicked row '+ ($(this).index()+1) );
+		  console.log ($('table tr['+$(this).index()+'] td:eq(0)').text());
+	})
+
+	</script>
+</body>
+</html>
